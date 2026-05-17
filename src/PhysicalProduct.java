@@ -8,6 +8,11 @@ public class PhysicalProduct extends Product{
         this.taxRate = taxRate;
     }
 
+    //Getters
+    public double getTaxRate() {
+        return taxRate;
+    }
+
     @Override
     public double getFinalPrice(){
         double basePrice = super.getBasePrice();

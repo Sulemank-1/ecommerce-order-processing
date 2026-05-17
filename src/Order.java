@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Order {
@@ -47,4 +49,21 @@ public class Order {
         System.out.println("Shipping Cost: " + calculateShipping());
         System.out.println("Grand Cost: " + calculateTotal());
     }
+
+    public void saveReceipt(String filename) {
+        try (PrintWriter output = new PrintWriter(filename)) {
+            for (Product p : orderItems) {
+                if (p instanceof PhysicalProduct) {
+                    PhysicalProduct pp = (PhysicalProduct) p;
+                    output.println("PHYSICAL," + pp.getProductID() + "," + pp.getName() + "," + pp.getBasePrice() + "," + pp.getWeight() + "," + pp.getTaxRate());
+                } else if (p instanceof DigitalProduct) {
+                    DigitalProduct dp = (DigitalProduct) p;
+                    output.println("DIGITAL," + dp.getProductID() + "," + dp.getName() + "," + dp.getBasePrice() + "," + dp.getDownloadLink());
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Error: Could not save data to file");
+        }
+    }
+
 }
