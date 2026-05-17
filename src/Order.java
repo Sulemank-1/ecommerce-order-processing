@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Order {
     //Data Fields
@@ -65,5 +66,18 @@ public class Order {
             System.out.println("Error: Could not save data to file");
         }
     }
+
+    public void sortItemsByPrice() {
+        if (orderItems.isEmpty()) {
+            System.out.println("Cart is empty.");
+            return;
+        }
+        ArrayList<Product> sortedList = new ArrayList<>(orderItems);
+        Collections.sort(sortedList);
+        for (Product p : sortedList) {
+            System.out.println(p + " | Calculated Final Price: $" + p.getFinalPrice());
+        }
+    }
+
 
 }
