@@ -1,0 +1,17 @@
+public class PhysicalProduct extends Product{
+    //Data Fields
+    private double taxRate;
+
+    //Constructor
+    public PhysicalProduct(int productID, String name, double basePrice, double weight, double taxRate){
+        super(productID, name, basePrice, weight);
+        this.taxRate = taxRate;
+    }
+
+    @Override
+    public double getFinalPrice(){
+        double basePrice = super.getBasePrice();
+        return basePrice + (basePrice * taxRate);
+    }
+
+}
