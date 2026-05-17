@@ -28,5 +28,12 @@ public class Order {
         return sum;
     }
 
+    public double calculateShipping(){
+        double sum = 0.0;
+        for (Product p: orderItems)
+            sum += p.getWeight();
+        return sum * SHIPPING_RATE_PER_KG;
+    }
+
 
 }
