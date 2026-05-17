@@ -3,7 +3,7 @@ public class PhysicalProduct extends Product{
     private double taxRate;
 
     //Constructor
-    public PhysicalProduct(int productID, String name, double basePrice, double weight, double taxRate){
+    public PhysicalProduct(int productID, String name, double basePrice, double weight, double taxRate) throws InvalidProductException{
         super(productID, name, basePrice, weight);
         this.taxRate = taxRate;
     }

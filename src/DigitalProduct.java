@@ -3,7 +3,7 @@ public class DigitalProduct extends Product{
     private String downloadLink;
 
     //Constructor
-    public DigitalProduct(int productID, String name, double basePrice){
+    public DigitalProduct(int productID, String name, double basePrice) throws InvalidProductException{
         super(productID, name, basePrice, 0.0);
         downloadLink = "www.downloadLink.com";
     }

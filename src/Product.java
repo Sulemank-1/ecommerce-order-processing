@@ -6,7 +6,9 @@ public abstract class Product {
     private double weight;
 
     //Constructor
-    public Product(int productID, String name, double basePrice, double weight) {
+    public Product(int productID, String name, double basePrice, double weight) throws InvalidProductException {
+        if (invalidProduct(basePrice, weight))
+            throw new InvalidProductException("Invalid product");
         this.productID = productID;
         this.name = name;
         this.basePrice = basePrice;
@@ -51,6 +53,9 @@ public abstract class Product {
     //Methods
     public abstract double getFinalPrice();
 
+    public boolean invalidProduct(double basePrice, double weight){
+        return (basePrice <= 0 || weight < 0);
+    }
 
     @Override
     public String toString() {
