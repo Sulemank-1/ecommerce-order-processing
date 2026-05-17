@@ -114,7 +114,7 @@ public class Order {
         ArrayList<Product> sortedList = new ArrayList<>(orderItems);
         Collections.sort(sortedList);
         for (Product p : sortedList) {
-            System.out.println(p + " | Calculated Final Price: $" + p.getFinalPrice());
+            System.out.println(p + " | Final Price: $" + p.getFinalPrice());
         }
     }
 

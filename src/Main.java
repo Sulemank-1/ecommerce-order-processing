@@ -1,15 +1,96 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner input = new Scanner(System.in);
+        Order activeOrder = new Order(786);
+        final String RECEIPT_FILE = "receipt.csv";
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        activeOrder.loadReceipt(RECEIPT_FILE);
+
+        boolean running = true;
+        while (running) {
+            System.out.println("\n=== E-Commerce Order Processing ===");
+            System.out.println("1. Add a Physical Product (Taxable)");
+            System.out.println("2. Add a Digital Product");
+            System.out.println("3. View Current Cart");
+            System.out.println("4. View Cart Sorted by Price (Cheapest First)");
+            System.out.println("5. Save Invoice and Close");
+            System.out.print("Select choice: ");
+
+            int choice = 0;
+            try {
+                choice = input.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Input Error: Please select an integer from the menu.");
+                input.nextLine();
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    try {
+                        System.out.print("Enter Product ID: ");
+                        int id = input.nextInt();
+                        System.out.print("Enter Item Name: ");
+                        String name = input.next();
+                        System.out.print("Enter Base Price ($): ");
+                        double price = input.nextDouble();
+                        System.out.print("Enter Shipping Weight (kg): ");
+                        double weight = input.nextDouble();
+                        System.out.print("Enter Standard Tax Rate (e.g., 0.15 for 15%): ");
+                        double tax = input.nextDouble();
+
+                        activeOrder.addProduct(new PhysicalProduct(id, name, price, weight, tax));
+                        System.out.println("Success: Physical item appended to checkout array.");
+                    } catch (InvalidProductException e) {
+                        System.out.println("Validation Failed: " + e.getMessage());
+                    } catch (InputMismatchException e) {
+                        System.out.println("Typing Error: Invalid format numeric stream provided.");
+                        input.nextLine();
+                    }
+                    break;
+
+                case 2:
+                    try {
+                        System.out.print("Enter Product ID: ");
+                        int id = input.nextInt();
+                        System.out.print("Enter Item Name: ");
+                        String name = input.next();
+                        System.out.print("Enter Price ($): ");
+                        double price = input.nextDouble();
+
+                        activeOrder.addProduct(new DigitalProduct(id, name, price));
+                        System.out.println("Success: Digital file added.");
+                    } catch (InvalidProductException e) {
+                        System.out.println("Validation Failed: " + e.getMessage());
+                    } catch (InputMismatchException e) {
+                        System.out.println("Typing Error: Invalid format numeric stream provided.");
+                        input.nextLine();
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\n--- Current Active Cart Contents ---");
+                    activeOrder.displayOrderSummary();
+                    break;
+
+                case 4:
+                    System.out.println("\n--- Sorted Presentation (Cheapest First) ---");
+                    activeOrder.sortItemsByPrice();
+                    break;
+
+                case 5:
+                    activeOrder.saveReceipt(RECEIPT_FILE);
+                    System.out.println("System shutting down. Receipt saved.");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid execution target choice. Please choose 1-5.");
+            }
         }
+        input.close();
     }
 }
