@@ -35,5 +35,9 @@ public class Order {
         return sum * SHIPPING_RATE_PER_KG;
     }
 
+    public double calculateTotal(){
+        return calculateSubtotal() + calculateShipping();
+    }
+
 
 }
