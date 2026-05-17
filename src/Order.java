@@ -17,27 +17,34 @@ public class Order {
         return orderID;
     }
 
-    public void addProduct(Product p){
+    //Methods
+    public void addProduct(Product p) {
         orderItems.add(p);
     }
 
-    public double calculateSubtotal(){
+    public double calculateSubtotal() {
         double sum = 0.0;
-        for (Product p: orderItems)
+        for (Product p : orderItems)
             sum += p.getBasePrice();
         return sum;
     }
 
-    public double calculateShipping(){
+    public double calculateShipping() {
         double sum = 0.0;
-        for (Product p: orderItems)
+        for (Product p : orderItems)
             sum += p.getWeight();
         return sum * SHIPPING_RATE_PER_KG;
     }
 
-    public double calculateTotal(){
+    public double calculateTotal() {
         return calculateSubtotal() + calculateShipping();
     }
 
-
+    public void displayOrderSummary() {
+        for (Product p : orderItems)
+            System.out.println(p.toString());
+        System.out.println("Subtotal: " + calculateSubtotal());
+        System.out.println("Shipping Cost: " + calculateShipping());
+        System.out.println("Grand Cost: " + calculateTotal());
+    }
 }
