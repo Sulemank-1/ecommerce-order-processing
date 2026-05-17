@@ -25,7 +25,7 @@ public class Order {
     public double calculateSubtotal() {
         double sum = 0.0;
         for (Product p : orderItems)
-            sum += p.getBasePrice();
+            sum += p.getFinalPrice();
         return sum;
     }
 
