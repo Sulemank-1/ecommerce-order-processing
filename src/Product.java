@@ -1,4 +1,4 @@
-public class Product {
+public abstract class Product {
     //Data Fields
     private int productID;
     private String name;
@@ -49,6 +49,9 @@ public class Product {
 
 
     //Methods
+    public abstract double getFinalPrice();
+
+
     @Override
     public String toString() {
         return "ID: " + productID + "| Name: " + name + "| Price: " + basePrice + "| Weight: " + weight;
