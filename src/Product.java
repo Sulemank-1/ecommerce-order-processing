@@ -1,4 +1,4 @@
-public abstract class Product {
+public abstract class Product implements Comparable<Product>{
     //Data Fields
     private int productID;
     private String name;
@@ -61,4 +61,10 @@ public abstract class Product {
     public String toString() {
         return "ID: " + productID + "| Name: " + name + "| Price: " + basePrice + "| Weight: " + weight;
     }
+
+    @Override
+    public int compareTo(Product o) {
+        return Double.compare(getFinalPrice(), o.getFinalPrice());
+    }
+
 }
