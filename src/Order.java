@@ -16,4 +16,10 @@ public class Order {
     public int getOrderID() {
         return orderID;
     }
+
+    public void addProduct(Product p){
+        orderItems.add(p);
+    }
+
+
 }
