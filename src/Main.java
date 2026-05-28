@@ -1,11 +1,10 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Order activeOrder = new Order(786);
-        final String RECEIPT_FILE = "receipt.csv";
+        final String RECEIPT_FILE = "receipt.dat";
 
         activeOrder.loadReceipt(RECEIPT_FILE);
 
@@ -83,7 +82,7 @@ public class Main {
 
                 case 5:
                     activeOrder.saveReceipt(RECEIPT_FILE);
-                    System.out.println("System shutting down. Receipt saved.");
+                    System.out.println("Receipt saved.");
                     running = false;
                     break;
 
