@@ -1,4 +1,6 @@
-public abstract class Product implements Comparable<Product>{
+import java.io.Serializable;
+
+public abstract class Product implements Serializable, Comparable<Product>{
     //Data Fields
     private int productID;
     private String name;
