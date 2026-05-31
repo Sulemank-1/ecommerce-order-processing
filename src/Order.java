@@ -50,33 +50,15 @@ public class Order implements Serializable {
     }
 
     public void saveReceipt(String filename) {
-        try (
-                ObjectOutputStream output = new ObjectOutputStream( new BufferedOutputStream( new FileOutputStream(filename)))
-        ) {
-            output.writeObject(orderItems);
-        } catch (IOException ex) {
-            System.out.println("Error: Could not save data to file");
-        }
+        StorageEngine.saveData(filename, orderItems);
     }
 
     public void loadReceipt(String filename) {
-        File file = new File(filename);
-        if (!file.exists()) {
-            System.out.println("No existing receipt file found.");
-            return;
-        }
-
-        try (
-                ObjectInputStream input = new ObjectInputStream(new BufferedInputStream( new FileInputStream(file)))
-        ) {
-            orderItems = (ArrayList<Product>) (input.readObject());
-            System.out.println("Receipt successfully loaded from " + filename);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Missing class definition blueprint during object reconstruction.");
-        }catch (StreamCorruptedException ex) {
-            System.out.println("File has been manually tampered with or corrupted! Access Blocked.");
-        }catch (IOException ex){
-            System.out.println("Error reading file. " + ex.getMessage());
+        orderItems = StorageEngine.loadData(filename);
+        if (!orderItems.isEmpty()) {
+            System.out.println("Receipt successfully loaded from file.");
+        } else {
+            System.out.println("No pre-existing order records found.");
         }
     }
 
