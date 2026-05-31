@@ -18,12 +18,11 @@ public class Main {
             System.out.println("5. Save Invoice and Close");
             System.out.print("Select choice: ");
 
-            int choice = 0;
+            int choice;
             try {
-                choice = input.nextInt();
-            } catch (InputMismatchException e) {
+                choice = Integer.parseInt(input.nextLine().trim());
+            } catch (NumberFormatException e) {
                 System.out.println("Input Error: Please select an integer from the menu.");
-                input.nextLine();
                 continue;
             }
 
@@ -31,42 +30,44 @@ public class Main {
                 case 1:
                     try {
                         System.out.print("Enter Product ID: ");
-                        int id = input.nextInt();
+                        int id = Integer.parseInt(input.nextLine().trim());
+
                         System.out.print("Enter Item Name: ");
-                        String name = input.next();
+                        String name = input.nextLine().trim();
+
                         System.out.print("Enter Base Price ($): ");
-                        double price = input.nextDouble();
+                        double price = Double.parseDouble(input.nextLine().trim());
+
                         System.out.print("Enter Shipping Weight (kg): ");
-                        double weight = input.nextDouble();
+                        double weight = Double.parseDouble(input.nextLine().trim());
+
                         System.out.print("Enter Standard Tax Rate (e.g., 0.15 for 15%): ");
-                        double tax = input.nextDouble();
+                        double tax = Double.parseDouble(input.nextLine().trim());
 
                         activeOrder.addProduct(new PhysicalProduct(id, name, price, weight, tax));
                         System.out.println("Success: Physical item appended to checkout array.");
                     } catch (InvalidProductException e) {
                         System.out.println("Validation Failed: " + e.getMessage());
-                    } catch (InputMismatchException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Typing Error: Invalid format numeric stream provided.");
-                        input.nextLine();
                     }
                     break;
 
                 case 2:
                     try {
                         System.out.print("Enter Product ID: ");
-                        int id = input.nextInt();
+                        int id = Integer.parseInt(input.nextLine().trim());
                         System.out.print("Enter Item Name: ");
-                        String name = input.next();
+                        String name = input.nextLine().trim();
                         System.out.print("Enter Price ($): ");
-                        double price = input.nextDouble();
+                        double price = Double.parseDouble(input.nextLine().trim());
 
                         activeOrder.addProduct(new DigitalProduct(id, name, price));
                         System.out.println("Success: Digital file added.");
                     } catch (InvalidProductException e) {
                         System.out.println("Validation Failed: " + e.getMessage());
-                    } catch (InputMismatchException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Typing Error: Invalid format numeric stream provided.");
-                        input.nextLine();
                     }
                     break;
 
