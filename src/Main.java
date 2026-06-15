@@ -15,7 +15,8 @@ public class Main {
             System.out.println("2. Add a Digital Product");
             System.out.println("3. View Current Cart");
             System.out.println("4. View Cart Sorted by Price (Cheapest First)");
-            System.out.println("5. Save Invoice and Close");
+            System.out.println("5. Undo Last Item Addition");
+            System.out.println("6. Save Invoice and Close");
             System.out.print("Select choice: ");
 
             int choice;
@@ -82,6 +83,13 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("\n--- Reverting Last Action ---");
+                    if (activeOrder.undoLastAction())
+                        System.out.println("Removed last item");
+                    else
+                        System.out.println("Error: Action couldn't be completed");
+                    break;
+                case 6:
                     activeOrder.saveReceipt(RECEIPT_FILE);
                     System.out.println("Receipt saved.");
                     running = false;
