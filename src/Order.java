@@ -6,11 +6,13 @@ public class Order implements Serializable {
     private int orderID;
     private ArrayList<Product> orderItems;
     private final double SHIPPING_RATE_PER_KG = 2.5;
+    private Stack<Product> commandHistory;
 
     //Constructor
     public Order(int orderID) {
         this.orderID = orderID;
         orderItems = new ArrayList<>();
+        commandHistory = new Stack<>();
     }
 
     //Getters
@@ -21,6 +23,25 @@ public class Order implements Serializable {
     //Methods
     public void addProduct(Product p) {
         orderItems.add(p);
+        commandHistory.push(p);
+    }
+
+    public boolean undoLastAction() {
+        if (commandHistory.isEmpty()) {
+            System.out.println("Notice: Nothing to undo. Action history is empty.");
+            return false;
+        }
+
+        Product lastAddedProduct = commandHistory.pop();
+
+        boolean removed = orderItems.remove(lastAddedProduct);
+
+        if (removed) {
+            System.out.println("Undo Success: Removed [" + lastAddedProduct.getName() + "] from your cart.");
+            return true;
+        }
+
+        return false;
     }
 
     public double calculateSubtotal() {
@@ -57,6 +78,7 @@ public class Order implements Serializable {
         orderItems = StorageEngine.loadData(filename);
         if (!orderItems.isEmpty()) {
             System.out.println("Receipt successfully loaded from file.");
+            commandHistory.clear();
         } else {
             System.out.println("No pre-existing order records found.");
         }
